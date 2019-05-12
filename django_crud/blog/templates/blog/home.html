@@ -1,0 +1,47 @@
+<style>
+    .center{
+        margin: auto;
+        padding: 80px;
+        width: 50%;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center ;
+    }
+    </style>
+    
+    {% extends 'blog/base.html' %}pyt
+    {% load static %}
+    {% block content %}
+    <div class="container mt-5">
+        <img src="{% static 'blog/img/duck.jpg' %}" alt="크으으으" width="10%" height="10%">
+        <h1><strong>멋쟁이 사자처럼 방명록</strong></h1>
+        
+        {% for post in posts %}
+        <div class="container mt-5">
+                <h1>{{ post.title }}</h1>
+                <p>{{ post.summary }}</p><a href="{% url 'detail' post.pk %}">더보기</a></p>
+                <p>{{ post.updated_at }}</p><hr>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <div class=" center">
+        <span class="step-links">
+            {% if posts.has_previous %}
+                <a href="?page=1">&laquo; 1</a>
+                <a href="?page={{ posts.previous_page_number }}">이전</a>
+            {% endif %}
+    
+            <span class="current">
+               [{{posts.number}}]
+                <!-- Page {{ posts.number }} of {{ posts.paginator.num_pages }} -->
+            </span>
+    
+            {% if posts.has_next %}
+                <a href="?page={{ posts.next_page_number }}">다음</a>
+                <a href="?page={{ posts.paginator.num_pages }}">{{ posts.paginator.num_pages }} &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+    {% endblock %}
